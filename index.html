@@ -1,0 +1,155 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Entrepreneur's Notebook</title>
+    <link type="text/css" rel="stylesheet" href="Style/reset.css">
+    <link type="text/css" rel="stylesheet" href="Style/main.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+</head>
+
+<body>
+    
+    <main>
+        <h1>Entrepreneur's Notebook</h1>
+        <section>
+            <div class="formsorg">
+                <h2>Заказы</h2>
+                <form id="zakazi">
+                    <fieldset>
+                        <label for="surname">Фамилия</label>
+                        <input id="surname" type="text" name="surname" required>
+                        <span></span>
+
+                        <label for="name">Имя</label>
+                        <input id="name" type="text" name="name" required>
+                        <span></span>
+
+                        <label for="patronimyc">Отчество</label>
+                        <input id="patronimyc" type="text" name="patronimyc" required>
+                        <span></span>
+                    </fieldset>
+                    <fieldset>
+                        <label for="tel">Телефон</label>
+                        <input id="tel" type="tel" pattern="8-9\d{2}-\d{3}-\d{2}-\d{2}" placeholder="8-9zz-zzz-zz-zz" title="Заполните в соответствии с примером" name="tel" required>
+                        <span></span>
+
+                        <label for="datebeg">Дата начала</label>
+                        <input id="datebeg" type="date" name="datebeg" required>
+                        <span></span>
+
+                        <label for="datend">Дата конца</label>
+                        <input id="datend" type="date" name="datend" required>
+                        <span></span>
+
+                        <label for="done">Выполнен
+                        <input id="done" type="checkbox" name="done" value="Executed">
+                        </label>
+
+                        <label for="price">Цена</label>
+                        <input id="price" type="text" name="price" required>
+                        <span></span>
+						
+						<label for="details">Описание</label>
+                        <textarea id="details" name="details">...</textarea>
+                        
+                        <input type="hidden" id="data-verb" name="data-verb" value="create">
+                        <input type="hidden" id="zakazi-table" name="table" value="zakazi">                        
+						
+                    </fieldset>
+                    <button type="submit">Save</button>                                           
+                </form>
+                <form id="show-form" action="handlers/data_handler.php" method="post">
+                    <input type="hidden" id="data-verb-2" name="data-verb" value="show-data">
+                    <button id="button-show-data" type="submit">Show</button> 
+                </form>
+            </div>
+            <div class="formsorg">
+                <h2>Закупки</h2>
+                <form id="zakupki" action="" method="post">
+                    <label for="item">Что купил</label>
+                    <input id="item" type="text" name="item" required>
+                    <span></span>
+
+                    <label for="vendor">Продавец</label>
+                    <input id="vendor" type="text" name="vendor" required>
+                    <span></span>
+
+                    <label for="cost">Стоимость</label>
+                    <input id="cost" type="text" name="cost" required>
+                    <span></span>
+
+                    <label for="date">Дата</label>
+                    <input id="date" type="date" name="date" required>
+                    <span></span>
+                    
+                    <input type="hidden" id="data-verb-3" name="data-verb" value="create">
+					<input type="hidden" id="zakupki-table" name="table" value="zakupki"> 
+                    
+                    <button type="submit">Save</button>
+                </form>
+            </div>
+        </section>
+        <div id="form-error"></div>
+        <div id="form-message"></div>
+    </main>
+    
+    <script>
+        "use strict"
+        
+        window.onload = function(){
+            document.getElementById('surname').focus();
+        };        
+                
+    </script>
+    <script>        
+        "use strict"
+        
+        $('#zakazi').submit(function(e){
+            e.preventDefault();
+            
+            $('#data-verb').val('create');
+            
+            let formData = $(this).serializeArray();            
+            console.dir(formData);
+            $.post('handlers/data_handler.php', formData, function(data){
+                console.dir(data);
+                let result = JSON.parse(data);
+                
+                if(result.status === 'error'){
+                    $('#form-error').html(result.message).css('color', 'red');
+					setTimeout(function(){$('#form-error').html('').css('color', 'red');}, 3000);
+                }
+                else{
+                    $('#form-message').html(result.message).css('color', 'green');
+					setTimeout(function(){$('#form-message').html('').css('color', 'green');}, 3000);
+                } 
+            });
+        });
+        
+		$('#zakupki').submit(function(e){
+            e.preventDefault();
+            
+            $('#data-verb-3').val('create');
+            
+            let formData = $(this).serializeArray();            
+            console.dir(formData);
+            $.post('handlers/data_handler.php', formData, function(data){
+                console.dir(data);
+                let result = JSON.parse(data);
+                
+                if(result.status === 'error'){
+                    $('#form-error').html(result.message).css('color', 'red');
+                    setTimeout(function(){$('#form-error').html('').css('color', 'red');}, 3000);
+                }
+                else{
+                    $('#form-message').html(result.message).css('color', 'green');
+					setTimeout(function(){$('#form-message').html('').css('color', 'green');}, 3000);
+                } 
+            });
+        });
+		
+    </script>
+</body>
+</html>
