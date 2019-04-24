@@ -1,0 +1,94 @@
+@charset "utf-8";
+/* CSS Document */
+
+*{
+    box-sizing: border-box;
+}
+
+body{
+    font: 16px Baskerville, "serif";
+}
+
+main{
+    width: 520px;
+    margin: 0 auto;
+    border: 5px solid black;
+    padding: 40px;
+}
+
+section{
+    box-sizing:  border-box;
+}
+
+.formsorg{
+    display: inline-block;
+    vertical-align: top;
+    width: 210px;
+    padding: 0 5px;
+}
+
+h1,
+h2{
+    text-align: center;
+}
+
+h1{
+    font: bold 36px "Palatino Linotype", "serif";    
+}
+
+h2{
+    font: bold 24px Georgia, "serif";
+    margin: 30px 0 5px 0;
+    text-decoration: underline wavy;
+}
+
+input{
+    height: 20px;
+    margin: 3px 0;
+}
+
+input,
+textarea,
+button{
+    width: 180px;
+}
+
+input[type="checkbox"]{
+    width: 20px;
+    vertical-align:middle;
+}
+
+input:invalid + span::after {
+    content:'x';
+    color: red;
+}
+input:valid + span::after {
+    content:'\2713';
+    color: green;
+}
+
+input[type="checkbox"],
+label[for="done"]{
+    display: inline-block;    
+}
+
+label{
+    display: block;
+    text-shadow: -2px -2px 2px gray;
+}
+
+button{
+    font-family: inherit;
+    font-weight: bold;
+    background: transparent;
+    border: 3px solid black;
+    height: 40px;
+    margin-top: 15px;
+}
+
+button:hover{
+    color: white;
+    background-image: linear-gradient(180deg, black 10px, white);
+    border-color: black white white white;
+    cursor: pointer;
+}
